@@ -11,6 +11,7 @@ npm run test
 ## TODO
 
 - [ ] Improve accessibility, allow selection of talents through keyboard
+- [ ] Make TalentCalculator configurable through props instead of it relying on static data mock, [this might work](https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md)
 
 ## Additional features
 
