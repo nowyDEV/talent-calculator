@@ -3,7 +3,7 @@ import { TalentPicker } from "./TalentPicker/TalentPicker";
 import { TalentPointsCounter } from "./TalentPointsCounter/TalentPointsCounter";
 import "./styles.css";
 import { TalentPath } from "./types";
-import { useEffect } from "react";
+import { useEffect } from "preact/compat";
 
 type Props = {
   userPoints: number;

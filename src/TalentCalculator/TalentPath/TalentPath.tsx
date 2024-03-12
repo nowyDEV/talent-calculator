@@ -1,4 +1,3 @@
-import { MouseEvent, KeyboardEvent } from "react";
 import { Talent } from "../types";
 import { TalentItem } from "../TalentItem/TalentItem";
 import { useTalentCalculatorStore } from "../store";
@@ -19,10 +18,7 @@ export function TalentPath({ name, talents }: Props) {
   const addTalent = useTalentCalculatorStore((state) => state.addTalent);
   const removeTalent = useTalentCalculatorStore((state) => state.removeTalent);
 
-  const handleMouseClick = (
-    event: MouseEvent<HTMLButtonElement>,
-    talent: Talent
-  ) => {
+  const handleMouseClick = (event: MouseEvent, talent: Talent) => {
     if (event.button === mouseButtons.left) {
       addTalent(talent);
       return;
@@ -35,7 +31,7 @@ export function TalentPath({ name, talents }: Props) {
   };
 
   const handleKeyboardClick = (
-    event: KeyboardEvent<HTMLButtonElement>,
+    event: KeyboardEvent,
     talent: Talent,
     isTalentActive: boolean
   ) => {
@@ -80,12 +76,14 @@ export function TalentPath({ name, talents }: Props) {
               active={isActive}
               name={talent.name}
               data-testid={talent.id}
-              onMouseDown={(event) => handleMouseClick(event, talent)}
-              onContextMenu={(event) => {
+              onMouseDown={(event: MouseEvent) =>
+                handleMouseClick(event, talent)
+              }
+              onContextMenu={(event: MouseEvent) => {
                 event.preventDefault();
                 handleMouseClick(event, talent);
               }}
-              onKeyDown={(event) =>
+              onKeyDown={(event: KeyboardEvent) =>
                 handleKeyboardClick(event, talent, isActive)
               }
               onTouchEnd={() => handleTouchEvent(talent, isActive)}

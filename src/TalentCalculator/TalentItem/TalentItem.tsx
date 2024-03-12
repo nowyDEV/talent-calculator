@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from "react";
+import { JSX } from "preact/jsx-dev-runtime";
 import "./styles.css";
 
 export type TalentIcon =
@@ -11,7 +11,7 @@ export type TalentIcon =
   | "cake"
   | "crown";
 
-type Props = ComponentPropsWithoutRef<"button"> & {
+type Props = JSX.IntrinsicElements["button"] & {
   icon: TalentIcon;
   active: boolean;
 };
