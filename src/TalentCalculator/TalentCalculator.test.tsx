@@ -3,9 +3,10 @@ import { TalentCalculator } from "./TalentCalculator";
 import { test, expect, afterEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { useTalentCalculatorStore } from "./store";
+import { data } from "../data";
 
 test("selects talents and increases counter", async () => {
-  render(<TalentCalculator />);
+  render(<TalentCalculator {...data} />);
 
   const firstTalent = screen.getByTestId("0");
   await userEvent.click(firstTalent);
@@ -19,7 +20,7 @@ test("selects talents and increases counter", async () => {
 });
 
 test("de-selects talent and decreases counter", async () => {
-  render(<TalentCalculator />);
+  render(<TalentCalculator {...data} />);
 
   const firstTalent = screen.getByTestId("0");
   await userEvent.click(firstTalent);
@@ -33,7 +34,7 @@ test("de-selects talent and decreases counter", async () => {
 });
 
 test("cannot de-select talents that are not last in path", async () => {
-  render(<TalentCalculator />);
+  render(<TalentCalculator {...data} />);
 
   const firstTalent = screen.getByTestId("0");
   await userEvent.click(firstTalent);
@@ -49,7 +50,7 @@ test("cannot de-select talents that are not last in path", async () => {
 });
 
 test("cannot select talents without activating previous ones in path", async () => {
-  render(<TalentCalculator />);
+  render(<TalentCalculator {...data} />);
 
   const el = screen.getByTestId("3");
   await userEvent.click(el);
@@ -59,7 +60,7 @@ test("cannot select talents without activating previous ones in path", async () 
 });
 
 test("does not increase counter when clicking on activated talent", async () => {
-  render(<TalentCalculator />);
+  render(<TalentCalculator {...data} />);
 
   const firstTalent = screen.getByTestId("0");
   await userEvent.click(firstTalent);
@@ -73,7 +74,7 @@ test("does not increase counter when clicking on activated talent", async () => 
 test("cannot select additional talents when all points are used", async () => {
   const talentIds = [0, 1, 2, 3, 4, 5, 6, 7];
 
-  render(<TalentCalculator />);
+  render(<TalentCalculator {...data} />);
 
   for (const talentId of talentIds) {
     const talentIcon = screen.getByTestId(talentId);
