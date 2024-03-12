@@ -37,23 +37,35 @@ export function TalentPath({
   return (
     <div className="talent-path">
       <span className="talent-path__name">{name}</span>
-      <ul className="talent-path__list">
-        {talents.map((talent) => (
-          <TalentItem
-            key={talent.id}
-            icon={talent.icon}
-            onClick={(event) => handleClick(event, talent)}
-            onContextMenu={(event) => {
-              event.preventDefault();
-              handleClick(event, talent);
-            }}
-            active={activeTalents.some(
-              (activeTalent) => activeTalent.id === talent.id
-            )}
-            name={talent.name}
-            data-testid={talent.id}
-          />
-        ))}
+      <ul
+        className="talent-path__list"
+        role="tablist"
+        aria-labelledby="talent-tablist"
+      >
+        {talents.map((talent) => {
+          const isActive = activeTalents.some(
+            (activeTalent) => activeTalent.id === talent.id
+          );
+
+          return (
+            <TalentItem
+              key={talent.id}
+              icon={talent.icon}
+              title={talent.name}
+              role="tab"
+              aria-label={talent.name}
+              aria-selected={isActive}
+              onClick={(event) => handleClick(event, talent)}
+              onContextMenu={(event) => {
+                event.preventDefault();
+                handleClick(event, talent);
+              }}
+              active={isActive}
+              name={talent.name}
+              data-testid={talent.id}
+            />
+          );
+        })}
       </ul>
     </div>
   );

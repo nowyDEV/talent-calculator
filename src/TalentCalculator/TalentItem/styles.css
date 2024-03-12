@@ -2,11 +2,16 @@
   width: 50px;
   height: 50px;
   border: 0;
-  cursor: pointer;
   background-position-y: 50px;
   position: relative;
   z-index: 1;
   outline: 2px solid transparent;
+}
+
+.talent-icon:active,
+.talent-icon:focus-visible {
+  outline-style: dashed;
+  outline-color: #fff;
 }
 
 .talent-icon:before {
