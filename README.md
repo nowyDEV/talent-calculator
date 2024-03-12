@@ -12,7 +12,7 @@ npm run test
 
 - [x] Improve accessibility, allow selection of talents through keyboard
 - [x] Make TalentCalculator configurable through props instead of it relying on static data mock, [this might work](https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md)
-- [ ] Switch to Preact to reduce bundle size
+- [x] Switch to Preact to reduce bundle size - partially done, zustand breaks on tests, this requires rewriting state management to Preact Signals
 
 ## Additional features
 
