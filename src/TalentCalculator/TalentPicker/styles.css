@@ -1,0 +1,15 @@
+.talent-picker {
+  width: 75%;
+  min-height: 300px;
+  margin: 0;
+  padding: 60px 0;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1020px) {
+  .talent-picker {
+    flex-direction: row;
+  }
+}

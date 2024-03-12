@@ -1,0 +1,27 @@
+.points-counter__wrapper {
+  width: 25%;
+  padding: 20px 30px 34px;
+}
+
+@media screen and (max-width: 1020px) {
+  .points-counter__wrapper {
+    width: 100%;
+  }
+}
+
+.points-counter__inner {
+  display: flex;
+  flex-flow: column wrap;
+  place-items: center;
+  background-color: #06080a;
+  padding: 12px;
+  font-size: 1.25rem;
+}
+
+.points-counter__value {
+  color: #f5f5f5;
+}
+
+.points-counter__description {
+  color: #33495e;
+}

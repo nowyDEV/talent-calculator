@@ -1,0 +1,90 @@
+.talent-icon {
+  width: 50px;
+  height: 50px;
+  border: 0;
+  cursor: pointer;
+  background-position-y: 50px;
+  position: relative;
+  z-index: 1;
+  outline: 2px solid transparent;
+}
+
+.talent-icon:before {
+  content: "";
+  width: 100px;
+  height: 10px;
+  background-color: #303132;
+  opacity: 0.4;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -100px;
+  z-index: -1;
+}
+
+@media screen and (max-width: 1020px) {
+  .talent-icon:before {
+    width: 10px;
+    height: 30px;
+    top: -30px;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+}
+
+.talent-icon:first-of-type:before {
+  display: none;
+}
+
+.talent-icon.active:before {
+  opacity: 1;
+}
+
+.talent-icon.active {
+  outline-color: #6eaae9;
+  background-position-y: 0;
+}
+
+.talent-icon:hover {
+  background-position-y: 0;
+}
+
+.talent-icon--ship {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 200px;
+}
+
+.talent-icon--diver {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 150px;
+}
+
+.talent-icon--lightning {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 100px;
+}
+
+.talent-icon--skull {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 50px;
+}
+
+.talent-icon--chevrons {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 400px;
+}
+
+.talent-icon--silverware {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 350px;
+}
+
+.talent-icon--cake {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 300px;
+}
+
+.talent-icon--crown {
+  background-image: url("../../assets/talent-icons-sprite.png");
+  background-position-x: 250px;
+}

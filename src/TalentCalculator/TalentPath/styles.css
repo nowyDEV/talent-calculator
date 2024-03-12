@@ -1,0 +1,42 @@
+.talent-path {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.talent-path:last-of-type {
+  margin-bottom: 0;
+}
+
+.talent-path__name {
+  flex: 0 0 20%;
+  color: #cccdce;
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-align: left;
+  letter-spacing: 1px;
+}
+
+.talent-path__list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  flex: 1;
+}
+
+@media screen and (max-width: 1020px) {
+  .talent-path {
+    flex-flow: column;
+    width: 50%;
+    margin: 0;
+  }
+
+  .talent-path__list {
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
