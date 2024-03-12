@@ -1,12 +1,11 @@
 import "./styles.css";
 
-export function TalentPointsCounter({
-  spent,
-  total,
-}: {
+type Props = {
   spent: number;
   total: number;
-}) {
+};
+
+export function TalentPointsCounter({ spent, total }: Props) {
   return (
     <div className="points-counter__wrapper">
       <p className="points-counter__inner">

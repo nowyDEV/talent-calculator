@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, KeyboardEvent } from "react";
 import { Talent } from "../types";
 import { TalentItem } from "../TalentItem/TalentItem";
 import { useTalentCalculatorStore } from "../store";
@@ -9,18 +9,17 @@ const mouseButtons = {
   right: 2,
 };
 
-export function TalentPath({
-  name,
-  talents,
-}: {
+type Props = {
   name: string;
   talents: readonly Talent[];
-}) {
+};
+
+export function TalentPath({ name, talents }: Props) {
   const activeTalents = useTalentCalculatorStore((state) => state.talents);
   const addTalent = useTalentCalculatorStore((state) => state.addTalent);
   const removeTalent = useTalentCalculatorStore((state) => state.removeTalent);
 
-  const handleClick = (
+  const handleMouseClick = (
     event: MouseEvent<HTMLButtonElement>,
     talent: Talent
   ) => {
@@ -31,6 +30,29 @@ export function TalentPath({
 
     if (event.button === mouseButtons.right) {
       removeTalent(talent);
+      return;
+    }
+  };
+
+  const handleKeyboardClick = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    talent: Talent,
+    isTalentActive: boolean
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      if (isTalentActive) {
+        removeTalent(talent);
+      } else {
+        addTalent(talent);
+      }
+    }
+  };
+
+  const handleTouchEvent = (talent: Talent, isTalentActive: boolean) => {
+    if (isTalentActive) {
+      removeTalent(talent);
+    } else {
+      addTalent(talent);
     }
   };
 
@@ -55,14 +77,18 @@ export function TalentPath({
               role="tab"
               aria-label={talent.name}
               aria-selected={isActive}
-              onClick={(event) => handleClick(event, talent)}
-              onContextMenu={(event) => {
-                event.preventDefault();
-                handleClick(event, talent);
-              }}
               active={isActive}
               name={talent.name}
               data-testid={talent.id}
+              onMouseDown={(event) => handleMouseClick(event, talent)}
+              onContextMenu={(event) => {
+                event.preventDefault();
+                handleMouseClick(event, talent);
+              }}
+              onKeyDown={(event) =>
+                handleKeyboardClick(event, talent, isActive)
+              }
+              onTouchEnd={() => handleTouchEvent(talent, isActive)}
             />
           );
         })}
