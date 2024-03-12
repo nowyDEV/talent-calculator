@@ -70,6 +70,20 @@ test("does not increase counter when clicking on activated talent", async () => 
   expect(pointsCounter).toBeInTheDocument();
 });
 
+test("cannot select additional talents when all points are used", async () => {
+  const talentIds = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  render(<TalentCalculator />);
+
+  for (const talentId of talentIds) {
+    const talentIcon = screen.getByTestId(talentId);
+    await userEvent.click(talentIcon);
+  }
+
+  const pointsCounter = screen.getByText("6 / 6");
+  expect(pointsCounter).toBeInTheDocument();
+});
+
 afterEach(() => {
   useTalentCalculatorStore.getState().reset();
 });
