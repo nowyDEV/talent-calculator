@@ -18,4 +18,4 @@ npm run test
 
 - State preserved on page refresh
 - De-selection also requires order (from last selected to first)
-- Talent boxes have labels when hovered, they are selectable by keyboard (navigate with tab/shift+tab, select with space/enter)
+- Talent boxes have labels when hovered, they are selectable/de-selectable by keyboard (navigate with tab/shift+tab, select with space/enter) and touch screens
