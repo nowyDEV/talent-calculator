@@ -1,5 +1,7 @@
 # Talent Calculator 9000
 
+## Deployed version available [here](https://talent-calculator.vercel.app/)
+
 ## Setup
 
 ```bash
@@ -12,7 +14,8 @@ npm run test
 
 - [x] Improve accessibility, allow selection of talents through keyboard
 - [x] Make TalentCalculator configurable through props instead of it relying on static data mock, [this might work](https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md)
-- [x] Switch to Preact to reduce bundle size - partially done, zustand breaks on tests, this requires rewriting state management to Preact Signals
+- [x] Switch to Preact to reduce bundle size - partially done, zustand breaks on tests, this requires rewriting state management to Preact Signals (available on [preact](https://github.com/nowyDEV/talent-calculator/tree/preact) branch)
+- [x] Add deployment
 
 ## Additional features
 
