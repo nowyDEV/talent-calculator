@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Talent } from "./types";
-import { data } from "./data";
+import { data } from "../data";
 
 // define types for state values and actions separately
 type State = {
@@ -10,6 +10,7 @@ type State = {
 };
 
 type Actions = {
+  setUserPoints: (points: number) => void;
   addTalent: (talent: Talent) => void;
   removeTalent: (talent: Talent) => void;
   reset: () => void;
@@ -25,6 +26,12 @@ export const useTalentCalculatorStore = create<State & Actions>()(
   persist(
     (set) => ({
       ...initialState,
+      setUserPoints: (points: number) =>
+        set(() => {
+          return {
+            userPoints: points,
+          };
+        }),
       addTalent: (talent: Talent) =>
         set((state) => {
           if (
