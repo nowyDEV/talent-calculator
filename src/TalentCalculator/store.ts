@@ -92,6 +92,7 @@ let talentCalculatorStore:
   | ReturnType<typeof createTalentCalculatorStore>
   | undefined;
 
+// Useful for testing to get the same instance of store that is used by components
 export function getTalentCalculatorStore() {
   if (talentCalculatorStore != null) {
     return talentCalculatorStore;
