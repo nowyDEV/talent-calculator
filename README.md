@@ -14,7 +14,7 @@ npm run test
 
 - [x] Improve accessibility, allow selection of talents through keyboard
 - [x] Make TalentCalculator configurable through props instead of it relying on static data mock, [this might work](https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md)
-- [x] Switch to Preact to reduce bundle size - available on [preact](https://github.com/nowyDEV/talent-calculator/tree/preact) branch
+- [x] Switch to Preact to reduce bundle size (52kb -> 9.6kb) - available on [preact](https://github.com/nowyDEV/talent-calculator/tree/preact) branch
 - [x] Add deployment
 
 ## Additional features
