@@ -1,6 +1,6 @@
 import { Talent } from "../types";
 import { TalentItem } from "../TalentItem/TalentItem";
-import { useTalentCalculatorStore } from "../store";
+import { useTalentCalculatorState } from "../useTalentCalculatorState";
 import "./styles.css";
 
 const mouseButtons = {
@@ -14,18 +14,17 @@ type Props = {
 };
 
 export function TalentPath({ name, talents }: Props) {
-  const activeTalents = useTalentCalculatorStore((state) => state.talents);
-  const addTalent = useTalentCalculatorStore((state) => state.addTalent);
-  const removeTalent = useTalentCalculatorStore((state) => state.removeTalent);
+  const state = useTalentCalculatorState();
+  const activeTalents = state.talents.value ?? [];
 
   const handleMouseClick = (event: MouseEvent, talent: Talent) => {
     if (event.button === mouseButtons.left) {
-      addTalent(talent);
+      state.addTalent(talent);
       return;
     }
 
     if (event.button === mouseButtons.right) {
-      removeTalent(talent);
+      state.removeTalent(talent);
       return;
     }
   };
@@ -37,18 +36,18 @@ export function TalentPath({ name, talents }: Props) {
   ) => {
     if (event.key === "Enter" || event.key === " ") {
       if (isTalentActive) {
-        removeTalent(talent);
+        state.removeTalent(talent);
       } else {
-        addTalent(talent);
+        state.addTalent(talent);
       }
     }
   };
 
   const handleTouchEvent = (talent: Talent, isTalentActive: boolean) => {
     if (isTalentActive) {
-      removeTalent(talent);
+      state.removeTalent(talent);
     } else {
-      addTalent(talent);
+      state.addTalent(talent);
     }
   };
 

@@ -1,25 +1,17 @@
-import { useTalentCalculatorStore } from "./store";
 import { TalentPicker } from "./TalentPicker/TalentPicker";
 import { TalentPointsCounter } from "./TalentPointsCounter/TalentPointsCounter";
 import "./styles.css";
 import { TalentPath } from "./types";
-import { useEffect } from "preact/compat";
+import { useTalentCalculatorState } from "./useTalentCalculatorState";
 
 type Props = {
-  userPoints: number;
   talentPaths: TalentPath[];
 };
 
-export function TalentCalculator({ userPoints, talentPaths }: Props) {
-  const spentPoints = useTalentCalculatorStore((state) => state.talents.length);
-  const totalPoints = useTalentCalculatorStore((state) => state.userPoints);
-  const setUserPoints = useTalentCalculatorStore(
-    (state) => state.setUserPoints
-  );
-
-  useEffect(() => {
-    setUserPoints(userPoints);
-  }, [userPoints, setUserPoints]);
+export function TalentCalculator({ talentPaths }: Props) {
+  const state = useTalentCalculatorState();
+  const spentPoints = state.talents.value.length ?? 0;
+  const totalPoints = state.userPoints.value ?? 0;
 
   return (
     <main className="talent-calculator__wrapper">
