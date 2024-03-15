@@ -1,6 +1,6 @@
 # Talent Calculator 9000
 
-## Deployed version available [here](https://talent-calculator.vercel.app/)
+## Deployed version available [here](https://talent-calculator-git-preact-nowydev.vercel.app)
 
 ## Setup
 
