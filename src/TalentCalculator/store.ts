@@ -1,5 +1,5 @@
-import { signal, effect, Signal } from "@preact/signals";
-import { Talent } from "./types";
+import { signal, effect, Signal, computed } from "@preact/signals";
+import { Talent, TalentPath } from "./types";
 
 const lsHandler = {
   LS_KEY: "talent-calculator-storage",
@@ -14,90 +14,112 @@ const lsHandler = {
 
 export type State = {
   userPoints: number;
-  talents: Talent[];
+  talentPaths: TalentPath[];
 };
 
 export type Actions = {
-  addTalent: (talent: Talent) => void;
-  removeTalent: (talent: Talent) => void;
+  activateTalent: (talent: Talent) => void;
+  deactivateTalent: (talent: Talent) => void;
   reset: () => void;
 };
 
 export type TalentCalculatorStore = Actions & {
   userPoints: Signal<State["userPoints"]>;
-  talents: Signal<State["talents"]>;
+  talentPaths: Signal<State["talentPaths"]>;
+  activeTalents: Signal<Talent[]>;
 };
 
 export type StoreParams = {
-  initialTalents?: State["talents"];
+  initialTalentPaths?: State["talentPaths"];
   initialUserPoints?: State["userPoints"];
 };
 
-export const defaultState = { talents: [], userPoints: 0 };
+export const defaultState = { talentPaths: [], userPoints: 0 };
 
 /**
  * Might refactor it as per recommendation
  * @see https://preactjs.com/guide/v10/signals/#managing-global-app-state
  */
 function createTalentCalculatorStore({
-  initialTalents = defaultState.talents,
+  initialTalentPaths = defaultState.talentPaths,
   initialUserPoints = defaultState.userPoints,
-}: StoreParams): TalentCalculatorStore {
-  const initialState = lsHandler.get() ?? {
-    talents: initialTalents,
-    userPoints: initialUserPoints,
+}: StoreParams = {}): TalentCalculatorStore {
+  const initialState = {
+    talentPaths: lsHandler.get()?.talentPaths ?? initialTalentPaths,
+    userPoints: lsHandler.get()?.userPoints ?? initialUserPoints,
   };
 
-  const talents = signal<Talent[]>(initialState.talents);
+  const talentPaths = signal<TalentPath[]>(initialState.talentPaths);
   const userPoints = signal(initialState.userPoints);
 
-  effect(() => {
-    lsHandler.set({ talents: talents.value, userPoints: userPoints.value });
+  const activeTalents = computed(() => {
+    const talents = talentPaths.value.flatMap((path) => path.talents);
+    return talents.filter((talent) => talent.active);
   });
 
-  const addTalent = (talent: Talent) => {
+  effect(() => {
+    lsHandler.set({
+      talentPaths: talentPaths.value,
+      userPoints: userPoints.value,
+    });
+  });
+
+  const activateTalent = (talent: Talent) => {
     if (
-      talents.value.length === userPoints.value ||
-      talents.value.some((activeTalent) => activeTalent.id === talent.id)
+      activeTalents.value.length === userPoints.value ||
+      activeTalents.value.some((activeTalent) => activeTalent.id === talent.id)
     ) {
       return;
     }
 
     if (
       talent.prevTalentId == null ||
-      talents.value.some(
+      activeTalents.value.some(
         (activeTalent) => activeTalent.id === talent.prevTalentId
       )
     ) {
-      talents.value = [...talents.value, talent];
+      talentPaths.value = talentPaths.value.map((path) => ({
+        ...path,
+        talents: path.talents.map((pathTalent) =>
+          pathTalent.id === talent.id
+            ? { ...pathTalent, active: true }
+            : pathTalent
+        ),
+      }));
     }
   };
 
-  const removeTalent = (talent: Talent) => {
+  const deactivateTalent = (talent: Talent) => {
     if (
-      talents.value.some(
+      activeTalents.value.some(
         (activeTalent) => activeTalent.id === talent.nextTalentId
       )
     ) {
       return;
     }
 
-    talents.value = talents.value.filter(
-      (activeTalent) => activeTalent.id !== talent.id
-    );
+    talentPaths.value = talentPaths.value.map((path) => ({
+      ...path,
+      talents: path.talents.map((pathTalent) =>
+        pathTalent.id === talent.id
+          ? { ...pathTalent, active: false }
+          : pathTalent
+      ),
+    }));
   };
 
   const reset = () => {
     userPoints.value = initialState.userPoints;
-    talents.value = initialState.talents;
+    talentPaths.value = initialState.talentPaths;
   };
 
   return {
-    talents,
+    talentPaths,
+    activeTalents,
     userPoints,
     reset,
-    addTalent,
-    removeTalent,
+    activateTalent,
+    deactivateTalent,
   };
 }
 

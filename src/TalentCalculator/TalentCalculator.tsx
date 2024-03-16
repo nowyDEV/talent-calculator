@@ -1,16 +1,11 @@
 import { TalentPicker } from "./TalentPicker/TalentPicker";
 import { TalentPointsCounter } from "./TalentPointsCounter/TalentPointsCounter";
 import "./styles.css";
-import { TalentPath } from "./types";
 import { useTalentCalculatorState } from "./useTalentCalculatorState";
 
-type Props = {
-  talentPaths: TalentPath[];
-};
-
-export function TalentCalculator({ talentPaths }: Props) {
+export function TalentCalculator() {
   const state = useTalentCalculatorState();
-  const spentPoints = state.talents.value.length ?? 0;
+  const spentPoints = state.activeTalents.value.length ?? 0;
   const totalPoints = state.userPoints.value ?? 0;
 
   return (
@@ -19,7 +14,7 @@ export function TalentCalculator({ talentPaths }: Props) {
         TitanStar Legends - Rune Mastery Loadout Talent Calculator 9000
       </h1>
       <div className="talent-calculator__contents">
-        <TalentPicker paths={talentPaths} />
+        <TalentPicker paths={state.talentPaths.value} />
         <TalentPointsCounter spent={spentPoints} total={totalPoints} />
       </div>
     </main>

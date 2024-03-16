@@ -15,16 +15,15 @@ type Props = {
 
 export function TalentPath({ name, talents }: Props) {
   const state = useTalentCalculatorState();
-  const activeTalents = state.talents.value ?? [];
 
   const handleMouseClick = (event: MouseEvent, talent: Talent) => {
     if (event.button === mouseButtons.left) {
-      state.addTalent(talent);
+      state.activateTalent(talent);
       return;
     }
 
     if (event.button === mouseButtons.right) {
-      state.removeTalent(talent);
+      state.deactivateTalent(talent);
       return;
     }
   };
@@ -36,18 +35,18 @@ export function TalentPath({ name, talents }: Props) {
   ) => {
     if (event.key === "Enter" || event.key === " ") {
       if (isTalentActive) {
-        state.removeTalent(talent);
+        state.deactivateTalent(talent);
       } else {
-        state.addTalent(talent);
+        state.activateTalent(talent);
       }
     }
   };
 
   const handleTouchEvent = (talent: Talent, isTalentActive: boolean) => {
     if (isTalentActive) {
-      state.removeTalent(talent);
+      state.deactivateTalent(talent);
     } else {
-      state.addTalent(talent);
+      state.activateTalent(talent);
     }
   };
 
@@ -60,10 +59,6 @@ export function TalentPath({ name, talents }: Props) {
         aria-labelledby="talent-tablist"
       >
         {talents.map((talent) => {
-          const isActive = activeTalents.some(
-            (activeTalent) => activeTalent.id === talent.id
-          );
-
           return (
             <TalentItem
               key={talent.id}
@@ -71,8 +66,8 @@ export function TalentPath({ name, talents }: Props) {
               title={talent.name}
               role="tab"
               aria-label={talent.name}
-              aria-selected={isActive}
-              active={isActive}
+              aria-selected={talent.active}
+              active={talent.active}
               name={talent.name}
               data-testid={talent.id}
               onMouseDown={(event: MouseEvent) =>
@@ -83,9 +78,9 @@ export function TalentPath({ name, talents }: Props) {
                 handleMouseClick(event, talent);
               }}
               onKeyDown={(event: KeyboardEvent) =>
-                handleKeyboardClick(event, talent, isActive)
+                handleKeyboardClick(event, talent, talent.active)
               }
-              onTouchEnd={() => handleTouchEvent(talent, isActive)}
+              onTouchEnd={() => handleTouchEvent(talent, talent.active)}
             />
           );
         })}

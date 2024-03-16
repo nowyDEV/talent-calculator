@@ -93,9 +93,12 @@ afterEach(() => {
 function renderTalentCalculator() {
   return render(
     <TalentCalculatorStateProvider
-      initialState={{ userPoints: data.userPoints }}
+      initialState={{
+        initialUserPoints: data.userPoints,
+        initialTalentPaths: data.talentPaths,
+      }}
     >
-      <TalentCalculator talentPaths={data.talentPaths} />
+      <TalentCalculator />
     </TalentCalculatorStateProvider>
   );
 }

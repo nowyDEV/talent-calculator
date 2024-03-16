@@ -12,6 +12,7 @@ export type Talent = {
   id: Id;
   name: string;
   icon: TalentIcon;
+  active: boolean;
   prevTalentId?: Id;
   nextTalentId?: Id;
 };
