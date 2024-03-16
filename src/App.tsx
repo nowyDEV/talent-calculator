@@ -7,7 +7,7 @@ import "./App.css";
 export function App() {
   return (
     <TalentCalculatorStateProvider
-      initialState={{ userPoints: data.userPoints }}
+      initialState={{ initialUserPoints: data.userPoints }}
     >
       <TalentCalculator talentPaths={data.talentPaths} />
     </TalentCalculatorStateProvider>

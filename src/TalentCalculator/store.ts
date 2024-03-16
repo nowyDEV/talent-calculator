@@ -28,12 +28,25 @@ export type TalentCalculatorStore = Actions & {
   talents: Signal<State["talents"]>;
 };
 
+export type StoreParams = {
+  initialTalents?: State["talents"];
+  initialUserPoints?: State["userPoints"];
+};
+
+export const defaultState = { talents: [], userPoints: 0 };
+
 /**
  * Might refactor it as per recommendation
  * @see https://preactjs.com/guide/v10/signals/#managing-global-app-state
  */
-function createTalentCalculatorStore(): TalentCalculatorStore {
-  const initialState: State = lsHandler.get() ?? { talents: [], userPoints: 0 };
+function createTalentCalculatorStore({
+  initialTalents = defaultState.talents,
+  initialUserPoints = defaultState.userPoints,
+}: StoreParams): TalentCalculatorStore {
+  const initialState = lsHandler.get() ?? {
+    talents: initialTalents,
+    userPoints: initialUserPoints,
+  };
 
   const talents = signal<Talent[]>(initialState.talents);
   const userPoints = signal(initialState.userPoints);
@@ -93,11 +106,13 @@ let talentCalculatorStore:
   | undefined;
 
 // Useful for testing to get the same instance of store that is used by components
-export function getTalentCalculatorStore() {
+export function getTalentCalculatorStore(
+  ...params: Parameters<typeof createTalentCalculatorStore>
+) {
   if (talentCalculatorStore != null) {
     return talentCalculatorStore;
   }
 
-  talentCalculatorStore = createTalentCalculatorStore();
+  talentCalculatorStore = createTalentCalculatorStore(...params);
   return talentCalculatorStore;
 }
