@@ -4,11 +4,11 @@ import { Talent, TalentPath } from "./types";
 const lsHandler = {
   LS_KEY: "talent-calculator-storage",
   get(): State | null {
-    const lsData = window.localStorage.getItem(this.LS_KEY);
+    const lsData = window.sessionStorage.getItem(this.LS_KEY);
     return lsData ? JSON.parse(lsData) : null;
   },
   set(data: State) {
-    window.localStorage.setItem(this.LS_KEY, JSON.stringify(data));
+    window.sessionStorage.setItem(this.LS_KEY, JSON.stringify(data));
   },
 };
 
