@@ -1,5 +1,6 @@
 import { TalentPath as TalentPathType } from "../types";
 import { TalentPath } from "../TalentPath/TalentPath";
+
 import "./styles.css";
 
 type Props = { paths: TalentPathType[] };

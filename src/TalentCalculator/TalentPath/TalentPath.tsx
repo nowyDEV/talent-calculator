@@ -14,41 +14,8 @@ type Props = {
 };
 
 export function TalentPath({ name, talents }: Props) {
-  const state = useTalentCalculatorState();
-
-  const handleMouseClick = (event: MouseEvent, talent: Talent) => {
-    if (event.button === mouseButtons.left) {
-      state.activateTalent(talent);
-      return;
-    }
-
-    if (event.button === mouseButtons.right) {
-      state.deactivateTalent(talent);
-      return;
-    }
-  };
-
-  const handleKeyboardClick = (
-    event: KeyboardEvent,
-    talent: Talent,
-    isTalentActive: boolean
-  ) => {
-    if (event.key === "Enter" || event.key === " ") {
-      if (isTalentActive) {
-        state.deactivateTalent(talent);
-      } else {
-        state.activateTalent(talent);
-      }
-    }
-  };
-
-  const handleTouchEvent = (talent: Talent, isTalentActive: boolean) => {
-    if (isTalentActive) {
-      state.deactivateTalent(talent);
-    } else {
-      state.activateTalent(talent);
-    }
-  };
+  const { handleKeyboardClick, handleMouseClick, handleTouchEvent } =
+    useTalentUserEventHandlers();
 
   return (
     <div className="talent-path">
@@ -87,4 +54,44 @@ export function TalentPath({ name, talents }: Props) {
       </ul>
     </div>
   );
+}
+
+function useTalentUserEventHandlers() {
+  const { activateTalent, deactivateTalent } = useTalentCalculatorState();
+
+  const handleMouseClick = (event: MouseEvent, talent: Talent) => {
+    if (event.button === mouseButtons.left) {
+      activateTalent(talent);
+      return;
+    }
+
+    if (event.button === mouseButtons.right) {
+      deactivateTalent(talent);
+      return;
+    }
+  };
+
+  const handleKeyboardClick = (
+    event: KeyboardEvent,
+    talent: Talent,
+    isTalentActive: boolean
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      if (isTalentActive) {
+        deactivateTalent(talent);
+      } else {
+        activateTalent(talent);
+      }
+    }
+  };
+
+  const handleTouchEvent = (talent: Talent, isTalentActive: boolean) => {
+    if (isTalentActive) {
+      deactivateTalent(talent);
+    } else {
+      activateTalent(talent);
+    }
+  };
+
+  return { handleMouseClick, handleKeyboardClick, handleTouchEvent };
 }
